@@ -9,10 +9,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/yourusername/hookr/internal/api"
-	"github.com/yourusername/hookr/internal/dispatcher"
-	"github.com/yourusername/hookr/internal/queue"
-	"github.com/yourusername/hookr/internal/store"
+	"github.com/sudok8s/hookr/internal/api"
+	"github.com/sudok8s/hookr/internal/dispatcher"
+	"github.com/sudok8s/hookr/internal/queue"
+	"github.com/sudok8s/hookr/internal/store"
 )
 
 func main() {
