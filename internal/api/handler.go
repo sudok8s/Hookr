@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"net/http"
+	"net/url"
 	"time"
 
 	"github.com/sudok8s/hookr/internal/model"
@@ -28,8 +29,18 @@ func (h *Handler) CreateSubscriber(w http.ResponseWriter, r *http.Request) {
 	var body struct {
 		URL string `json:"url"`
 	}
-	if err := json.NewDecoder(r.Body).Decode(&body); err != nil || body.URL == "" {
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	if body.URL == "" {
 		http.Error(w, `{"error":"url is required"}`, http.StatusBadRequest)
+	}
+
+	u, err := url.Parse(body.URL)
+	if err != nil || (u.Scheme != "http" && u.Scheme != "https") {
+		http.Error(w, "Invalid request body", http.StatusUnprocessableEntity)
 		return
 	}
 
